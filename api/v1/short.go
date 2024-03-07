@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"short-url/config"
 	"short-url/utils"
-	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/redis/go-redis/v9"
@@ -36,7 +35,7 @@ func (s *EndpointsService) ShortenURL(c echo.Context) error {
 
 	// store the URL in Redis
 	ctx := context.Background()
-	err := s.RedisClient.Set(ctx, short, url, time.Duration(config.EnvConfig.RedisConfig.TTL)).Err()
+	err := s.RedisClient.Set(ctx, short, url, config.EnvConfig.RedisConfig.TTL).Err()
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
@@ -54,5 +53,5 @@ func (s *EndpointsService) RedirectURL(c echo.Context) error {
 		return c.String(http.StatusNotFound, "Key not found or already expired!")
 	}
 
-	return c.String(http.StatusOK, url)
+	return c.String(http.StatusTemporaryRedirect, url)
 }

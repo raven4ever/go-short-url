@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 type Config struct {
@@ -22,7 +23,7 @@ func loadEnvirontmentConfig() *Config {
 			Username: getEnvVariable("REDIS_USERNAME", ""),
 			Password: getEnvVariable("REDIS_PASSWORD", ""),
 			DB:       stringToPort(getEnvVariable("REDIS_DB", "0")),
-			TTL:      stringToPort(getEnvVariable("REDIS_TTL", "5000")),
+			TTL:      time.Duration(stringToPort(getEnvVariable("REDIS_TTL", "5"))) * time.Minute,
 		},
 		ServerConfig: ServerConfig{
 			Port: stringToPort(getEnvVariable("PORT", "8080")),

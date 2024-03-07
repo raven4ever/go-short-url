@@ -1,6 +1,9 @@
 package config
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type RedisConfig struct {
 	Host     string
@@ -8,7 +11,7 @@ type RedisConfig struct {
 	Username string
 	Password string
 	DB       int
-	TTL      int
+	TTL      time.Duration
 }
 
 func (rc *RedisConfig) GetAddress() string {
