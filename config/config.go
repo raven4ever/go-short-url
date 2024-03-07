@@ -7,7 +7,8 @@ import (
 )
 
 type Config struct {
-	RedisConfig RedisConfig
+	RedisConfig  RedisConfig
+	ServerConfig ServerConfig
 }
 
 var EnvConfig = loadEnvirontmentConfig()
@@ -21,6 +22,9 @@ func loadEnvirontmentConfig() *Config {
 			Password: getEnvVariable("REDIS_PASSWORD", ""),
 			DB:       stringToPort(getEnvVariable("REDIS_DB", "0")),
 			TTL:      stringToPort(getEnvVariable("REDIS_TTL", "5000")),
+		},
+		ServerConfig: ServerConfig{
+			Port: stringToPort(getEnvVariable("PORT", "8080")),
 		},
 	}
 }

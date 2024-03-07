@@ -1,11 +1,11 @@
 package db
 
-import "github.com/redis/go-redis/v9"
-import "short-url/config"
+import (
+	"github.com/redis/go-redis/v9"
+	"short-url/config"
+)
 
-var RedisClient = newRedisClient()
-
-func newRedisClient() *redis.Client {
+func NewRedisClient() *redis.Client {
 	return redis.NewClient(&redis.Options{
 		Addr:     config.EnvConfig.RedisConfig.GetAddress(),
 		Username: config.EnvConfig.RedisConfig.Username,

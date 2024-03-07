@@ -2,38 +2,29 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
+	"short-url/api"
+	"short-url/config"
 	"short-url/db"
-
-	"github.com/redis/go-redis/v9"
 )
 
 func main() {
 	log.Println("Starting the activity...")
 
 	log.Println("Connecting to Redis...")
+	redisClient := db.NewRedisClient()
+
+	// test the Redis connection
 	ctx := context.Background()
-
-	err := db.RedisClient.Set(ctx, "key", "value", 0).Err()
-	if err != nil {
-		panic(err)
+	if _, err := redisClient.Ping(ctx).Result(); err != nil {
+		log.Fatal(err)
 	}
 
-	val, err := db.RedisClient.Get(ctx, "key").Result()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("key", val)
+	srv := api.NewApiServer(config.EnvConfig.ServerConfig.Addr(), redisClient)
 
-	val2, err := db.RedisClient.Get(ctx, "key2").Result()
-	if err == redis.Nil {
-		fmt.Println("key2 does not exist")
-	} else if err != nil {
-		panic(err)
-	} else {
-		fmt.Println("key2", val2)
+	// Start server
+	log.Println("Starting the server...")
+	if err := srv.Run(); err != nil {
+		log.Fatal(err)
 	}
-	// Output: key value
-	// key2 does not exist
 }
