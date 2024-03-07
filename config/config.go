@@ -7,8 +7,9 @@ import (
 )
 
 type Config struct {
-	RedisConfig  RedisConfig
-	ServerConfig ServerConfig
+	RedisConfig    RedisConfig
+	ServerConfig   ServerConfig
+	ShortUrlLength int
 }
 
 var EnvConfig = loadEnvirontmentConfig()
@@ -26,6 +27,7 @@ func loadEnvirontmentConfig() *Config {
 		ServerConfig: ServerConfig{
 			Port: stringToPort(getEnvVariable("PORT", "8080")),
 		},
+		ShortUrlLength: stringToPort(getEnvVariable("SHORT_URL_LENGTH", "7")),
 	}
 }
 
