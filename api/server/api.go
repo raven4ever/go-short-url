@@ -1,9 +1,11 @@
 package server
 
 import (
-	"github.com/labstack/echo/v4"
-	"github.com/redis/go-redis/v9"
 	"short-url/api/v1"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/redis/go-redis/v9"
 )
 
 type ApiServer struct {
@@ -20,6 +22,9 @@ func NewApiServer(address string, client *redis.Client) *ApiServer {
 
 func (s *ApiServer) Run() error {
 	echoServer := echo.New()
+
+	// enable server logging
+	echoServer.Use(middleware.Logger())
 
 	// create the API v1 group
 	apiV1Group := echoServer.Group("/api/v1")
