@@ -89,6 +89,41 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "get invalid URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"  pm.expect(pm.response.code).to.eql(404);",
+							"});",
+							"",
+							"pm.test(\"Response is not empty\", function () {",
+							"  pm.expect(pm.response.text()).to.be.not.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/{{api_v1_path}}/XXX9999YYYY777",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{api_v1_path}}",
+						"XXX9999YYYY777"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
