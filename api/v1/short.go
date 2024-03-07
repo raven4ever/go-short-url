@@ -41,11 +41,18 @@ func (s *EndpointsService) ShortenURL(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 
-	return c.String(http.StatusOK, short)
+	return c.String(http.StatusCreated, short)
 }
 
 func (s *EndpointsService) RedirectURL(c echo.Context) error {
 	shortURL := c.Param("shortURL")
 
-	return c.String(200, shortURL)
+	// retrieve the URL from Redis
+	ctx := context.Background()
+	url, err := s.RedisClient.Get(ctx, shortURL).Result()
+	if err != nil {
+		return c.String(http.StatusNotFound, "Key not found or already expired!")
+	}
+
+	return c.String(http.StatusOK, url)
 }
