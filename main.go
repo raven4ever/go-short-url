@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"log"
-	"short-url/api"
+	"short-url/api/server"
 	"short-url/config"
 	"short-url/db"
 )
@@ -20,7 +20,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	srv := api.NewApiServer(config.EnvConfig.ServerConfig.Addr(), redisClient)
+	srv := server.NewApiServer(config.EnvConfig.ServerConfig.Addr(), redisClient)
 
 	// Start server
 	log.Println("Starting the server...")

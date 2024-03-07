@@ -1,8 +1,9 @@
-package api
+package server
 
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/redis/go-redis/v9"
+	"short-url/api/v1"
 )
 
 type ApiServer struct {
@@ -24,7 +25,8 @@ func (s *ApiServer) Run() error {
 	apiV1Group := echoServer.Group("/api/v1")
 
 	// create the URL shortening endpoint
-	apiV1Group.POST("/shorten", nil)
+	sh := endpoints.NewEndpointsService(s.RedisClient)
+	sh.RegisterRoutes(apiV1Group)
 
 	// start the server
 	return echoServer.Start(s.Address)
