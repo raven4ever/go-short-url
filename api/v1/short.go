@@ -30,6 +30,11 @@ func (s *EndpointsService) RegisterRoutes(g *echo.Group) {
 func (s *EndpointsService) ShortenURL(c echo.Context) error {
 	url := c.FormValue("url")
 
+	// validate the URL
+	if !utils.IsValidURL(url) {
+		return c.String(http.StatusBadRequest, "Invalid URL!")
+	}
+
 	// generate a random string using alphanumeric characters
 	short := utils.RandString(config.EnvConfig.ShortUrlLength)
 

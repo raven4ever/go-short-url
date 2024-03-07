@@ -2,6 +2,7 @@ package utils
 
 import (
 	"math/rand"
+	"net/url"
 )
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
@@ -13,4 +14,9 @@ func RandString(n int) string {
 	}
 
 	return string(b)
+}
+
+func IsValidURL(rawURL string) bool {
+	_, err := url.ParseRequestURI(rawURL)
+	return err == nil
 }

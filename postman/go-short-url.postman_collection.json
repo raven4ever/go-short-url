@@ -37,7 +37,53 @@
 					"formdata": [
 						{
 							"key": "url",
-							"value": "google.com",
+							"value": "https://google.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/{{api_v1_path}}/shorten",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{api_v1_path}}",
+						"shorten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "shorten invalid URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"  pm.expect(pm.response.code).to.eql(400);",
+							"});",
+							"",
+							"pm.test(\"Response is not empty\", function () {",
+							"  pm.expect(pm.response.text()).to.be.not.empty;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "url",
+							"value": "abc123XXXX",
 							"type": "text"
 						}
 					]
