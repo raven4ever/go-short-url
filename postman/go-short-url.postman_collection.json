@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "deda218f-1921-406e-b0d2-23400620031f",
+		"name": "go-short-url",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10694994"
+	},
+	"item": [
+		{
+			"name": "shorten",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"  pm.expect(pm.response.code).to.eql(201);",
+							"});",
+							"",
+							"pm.test(\"Response is a 7char string\", function () {",
+							"  pm.expect(pm.response.text()).to.have.lengthOf(7)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "url",
+							"value": "google.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/{{api_v1_path}}/shorten",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{api_v1_path}}",
+						"shorten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"  pm.expect(pm.response.code).to.eql(307);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/{{api_v1_path}}/oDGhV7c",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{api_v1_path}}",
+						"oDGhV7c"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8080",
+			"type": "string"
+		},
+		{
+			"key": "api_v1_path",
+			"value": "api/v1",
+			"type": "string"
+		}
+	]
+}
