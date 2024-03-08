@@ -14,6 +14,11 @@ type EndpointsService struct {
 	RedisClient *redis.Client
 }
 
+type ModalData struct {
+	ShortURL string
+	Err      error
+}
+
 func NewEndpointsService(client *redis.Client) *EndpointsService {
 	return &EndpointsService{
 		RedisClient: client,
@@ -42,10 +47,10 @@ func (s *EndpointsService) ShortenURL(c echo.Context) error {
 	ctx := context.Background()
 	err := s.RedisClient.Set(ctx, short, url, config.EnvConfig.RedisConfig.TTL).Err()
 	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return c.Render(http.StatusInternalServerError, "add_error.html", ModalData{Err: err})
 	}
 
-	return c.String(http.StatusCreated, short)
+	return c.Render(http.StatusOK, "modal.html", ModalData{ShortURL: short})
 }
 
 func (s *EndpointsService) RedirectURL(c echo.Context) error {

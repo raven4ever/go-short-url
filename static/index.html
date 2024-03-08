@@ -25,16 +25,23 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5">
-        <form hx-post="/api/v1/shorten">
+        <form>
           <div class="input-group mb-3">
             <label for="url">The URL you want to memorise under the form http[s]://example.com</label>
-            <input type="url" id="url" class="form-control" placeholder="Your URL..." aria-label="Button" />
-            <button class="btn btn-outline-secondary" type="submit" action>
+            <input type="url" id="url" name="url" class="form-control" placeholder="Your URL..." aria-label="Button" />
+            <button class="btn btn-outline-secondary" hx-post="/api/v1/shorten" hx-trigger="click"
+              hx-target="#modals-here" data-bs-toggle="modal" data-bs-target="#modals-here">
               Cut it!
             </button>
           </div>
         </form>
       </div>
+    </div>
+  </div>
+
+  <div id="modals-here" class="modal modal-blur fade" style="display: none" aria-hidden="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content"></div>
     </div>
   </div>
 </body>

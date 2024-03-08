@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"log"
-	"short-url/server"
 	"short-url/config"
 	"short-url/db"
+	"short-url/server"
 )
 
 func main() {

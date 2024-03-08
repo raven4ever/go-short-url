@@ -1,6 +1,7 @@
 package server
 
 import (
+	"html/template"
 	"short-url/api/v1"
 
 	"github.com/labstack/echo/v4"
@@ -41,6 +42,13 @@ func (s *ApiServer) Run() error {
 		HTML5:      true,
 		IgnoreBase: true,
 	}))
+
+	// set the custom template renderer
+	t := &Template{
+		templates: template.Must(template.ParseGlob("views/*.html")),
+	}
+
+	echoServer.Renderer = t
 
 	// start the server
 	return echoServer.Start(s.Address)
