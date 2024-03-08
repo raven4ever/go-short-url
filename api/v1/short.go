@@ -58,5 +58,5 @@ func (s *EndpointsService) RedirectURL(c echo.Context) error {
 		return c.String(http.StatusNotFound, "Key not found or already expired!")
 	}
 
-	return c.String(http.StatusTemporaryRedirect, url)
+	return c.Redirect(http.StatusTemporaryRedirect, url)
 }
