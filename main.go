@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"log"
-	"short-url/api/server"
+	"short-url/server"
 	"short-url/config"
 	"short-url/db"
 )

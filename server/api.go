@@ -33,6 +33,15 @@ func (s *ApiServer) Run() error {
 	sh := endpoints.NewEndpointsService(s.RedisClient)
 	sh.RegisterRoutes(apiV1Group)
 
+	// add static middleware
+	echoServer.Use(middleware.StaticWithConfig(middleware.StaticConfig{
+		Root:       "static",
+		Browse:     true,
+		Index:      "index.html",
+		HTML5:      true,
+		IgnoreBase: true,
+	}))
+
 	// start the server
 	return echoServer.Start(s.Address)
 }
